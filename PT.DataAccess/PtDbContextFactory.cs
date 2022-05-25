@@ -14,8 +14,7 @@ namespace PT.DataAccess
         public PTDbContext Create()
         {
             
-            //return new PTDbContext(@"Server=dsrsql01.dsr.com.pl\dev;Database=Dev_MES-PT_Kelvion;User Id=mes-PT-kelvion;Password=P5-uC2;");
-            return new PTDbContext(@"Server=localhost\SQLEXPRESS;Database=PuppyTinderDB;Integrated Security=true;");
+           return new PTDbContext(@"Server=localhost\SQLEXPRESS;Database=PuppyTinderDB;Integrated Security=true;");
         }
     }
 }

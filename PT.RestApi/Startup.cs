@@ -25,6 +25,7 @@ using Microsoft.AspNet.OData.Extensions;
 using AutoMapper;
 using Microsoft.Extensions.FileProviders;
 using PT.Services.Enums;
+using PT.Services.Administration;
 
 namespace PT.RestApi
 {
@@ -77,6 +78,7 @@ namespace PT.RestApi
                 return x.GetService<PTDbContext>();
             });
             services.AddScoped<IEnumService, EnumService>();
+            services.AddScoped<IAdministrationService, AdministrationService>();
             services.AddMemoryCache();
 
             services.AddCors(builder => builder.AddPolicy("CorsPolicy",
@@ -184,21 +186,6 @@ namespace PT.RestApi
                     }
                 });
             });
-            app.Map("/web-panel", panelApp =>
-             {
-                 panelApp.UseSpa(spa =>
-                 {
-                     spa.Options.SourcePath = "wwwroot/web-panel";
-                     spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
-                     {
-                         FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "web-panel"))
-                     };
-                     if (env.IsDevelopment())
-                     {
-                         spa.UseProxyToSpaDevelopmentServer("http://localhost:60653/web-panel");
-                     }
-                 });
-             });
         }
     }
 }

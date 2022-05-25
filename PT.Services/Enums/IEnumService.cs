@@ -7,6 +7,10 @@ namespace PT.Services.Enums
 {
     public interface IEnumService
     {
-        List<EnumViewModel> getColors();
+        List<ColorViewModel> getColors();
+        List<CharacterViewModel> getCharacters();
+        List<SizeViewModel> getSizes();
+        List<AnimalKindViewModel> getAnimalKinds();
+        List<SpecificAnimalKindViewModel> getSpecificAnimalKinds();
     }
 }

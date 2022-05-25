@@ -23,11 +23,67 @@ namespace PT.RestApi.Controllers
         }
 
         [HttpGet("getColors")]
-        public List<EnumViewModel> getColors()
+        public List<ColorViewModel> getColors()
         {
             try
             {
                 return enumService.getColors();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw new Exception("",ex);
+            }
+        }
+
+        [HttpGet("getCharacters")]
+        public List<CharacterViewModel> GetCharacters()
+        {
+            try
+            {
+                return enumService.getCharacters();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw new Exception("",ex);
+            }
+        }
+
+        [HttpGet("getSizes")]
+        public List<SizeViewModel> GetSizes()
+        {
+            try
+            {
+                return enumService.getSizes();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw new Exception("",ex);
+            }
+        }
+
+        [HttpGet("getAnimalKinds")]
+        public List<AnimalKindViewModel> GetAnimalKInds()
+        {
+            try
+            {
+                return enumService.getAnimalKinds();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw new Exception("",ex);
+            }
+        }
+
+        [HttpGet("getSpecificAnimalKinds")]
+        public List<SpecificAnimalKindViewModel> GetSpecificAnimalKinds()
+        {
+            try
+            {
+                return enumService.getSpecificAnimalKinds();
             }
             catch (Exception ex)
             {
