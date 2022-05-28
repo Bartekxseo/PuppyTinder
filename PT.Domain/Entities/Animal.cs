@@ -7,8 +7,8 @@ namespace PT.Domain.Entities
 {
     public class Animal : Entity<int>
     {
-        public int AnimalKindId { get; set; }
-        public virtual AnimalKind AnimalKind { get; set; }
+        public int SpecificAnimalKindId { get; set; }
+        public virtual SpecificAnimalKind SpecificAnimalKind { get; set; }
 
         public string Description { get; set; }
         public string Timeline { get; set; }
@@ -32,9 +32,9 @@ namespace PT.Domain.Entities
         public bool LikesAnimals { get; set; }
         public bool IsMale { get; set; }
 
-        public bool CustomBoolean1 { get; set; }
-        public int CustomInteger1 { get; set; }
-        public string CustomCharacter1 { get; set; }
+        public bool? CustomBoolean1 { get; set; }
+        public int? CustomInteger1 { get; set; }
+        public string? CustomCharacter1 { get; set; }
 
     }
 }

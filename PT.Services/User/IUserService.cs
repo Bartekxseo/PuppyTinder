@@ -8,5 +8,6 @@ namespace PT.Services.User
     public interface IUserService
     {
         ShelterViewModel getShelter(int shelterId);
+        AnimalViewModel getAnimal(int animalId);
     }
 }

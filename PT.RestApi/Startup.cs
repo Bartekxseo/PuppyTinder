@@ -27,6 +27,7 @@ using Microsoft.Extensions.FileProviders;
 using PT.Services.Enums;
 using PT.Services.Administration;
 using PT.Domain.Services;
+using PT.Services.User;
 
 namespace PT.RestApi
 {
@@ -82,6 +83,7 @@ namespace PT.RestApi
             services.AddScoped<IEnumService, EnumService>();
             services.AddScoped<IAdministrationService, AdministrationService>();
             services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddMemoryCache();
 

@@ -13,13 +13,13 @@ namespace PT.Services.User.Model
 
         public string Description { get; set; }
 
-        public AnimalKindViewModel AnimalKind { get; set; }
+        public SpecificAnimalKindViewModel SpecificAnimalKind { get; set; }
 
         public List<CharacterViewModel> Characters { get; set; }
 
         public ColorViewModel Color { get; set; }
 
-        public SizeViewModel Size { get; set; }
+        public SizeViewModel PuppySize { get; set; }
 
         public bool IsMale { get; set; }
 

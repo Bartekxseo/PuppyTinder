@@ -31,10 +31,6 @@ namespace PT.Services.User
             var animal = ptDbContext.Set<Animal>().Where(x => x.Id == animalId).FirstOrDefault();
             var animalViewModel = new AnimalViewModel();
             mapper.Map(animal, animalViewModel);
-            mapper.Map(animal.Characters, animalViewModel.Characters);
-            mapper.Map(animal.Color, animalViewModel.Color);
-            mapper.Map(animal.AnimalKind, animalViewModel.AnimalKind);
-            mapper.Map(animal.PuppySize, animalViewModel.Size);
             return animalViewModel;
         }
     }

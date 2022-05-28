@@ -11,7 +11,7 @@ namespace PT.DataAccess.EntityConfiguration
         public AnimalConfiguration()
         {
             HasKey(x => x.Id);
-            HasRequired(x => x.AnimalKind).WithMany().HasForeignKey(x => x.AnimalKindId);
+            HasRequired(x => x.SpecificAnimalKind).WithMany().HasForeignKey(x => x.SpecificAnimalKindId);
             Property(x => x.Description).IsOptional().HasMaxLength(500);
             Property(x => x.Timeline).IsOptional().HasMaxLength(500);
             HasRequired(x => x.Color).WithMany().HasForeignKey(x => x.ColorId);
