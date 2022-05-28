@@ -8,6 +8,8 @@ namespace PT.Domain.Entities.Enums
     {
         Waiting = 1,
         Accepted = 0,
-        Rejected = 2
+        Rejected = 2,
+        Like = 3,
+        Dislike = 4
     }
 }

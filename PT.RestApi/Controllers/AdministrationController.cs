@@ -39,10 +39,12 @@ namespace PT.RestApi.Controllers
         }
 
         [HttpGet("getUser")]
-        public UserViewModel getUser(string token)
+        public UserViewModel getUser()
         {
             try
             {
+                var requestAuth = Request.Headers.Where(x => x.Key == "Authorization").FirstOrDefault().Value.ToString().Trim();
+                var token = requestAuth.Substring(requestAuth.IndexOf(" ")+1);
                 return administrationService.getUser(token);
             }
             catch (Exception ex)

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNet.OData.Query;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using PT.Domain.Entities;
 using PT.Services.User;
 using PT.Services.User.Model;
 using System;
@@ -21,6 +23,20 @@ namespace PT.RestApi.Controllers
             this.userService = userService;
         }
 
+        [HttpGet("getShelter")]
+        public ShelterViewModel getShelter(int shelterId)
+        {
+            try
+            {
+                return userService.getShelter(shelterId);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw new Exception("", ex);
+            }
+        }
+
         [HttpGet("getAnimal")]
         public AnimalViewModel getAnimal(int animalId)
         {
@@ -32,6 +48,69 @@ namespace PT.RestApi.Controllers
             {
                 logger.Error(ex);
                 throw new Exception("",ex);
+            }
+        }
+
+        [HttpGet("getAnimals")]
+        public List<AnimalViewModel> getAnimals(ODataQueryOptions<Animal> options)
+        {
+            try
+            {
+                return userService.getAnimals(options);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw new Exception("", ex);
+            }
+        }
+
+        [HttpGet("likeAnimal")]
+        public ActionResult likeAnimal(int animalId)
+        {
+            try
+            {
+                var requestAuth = Request.Headers.Where(x => x.Key == "Authorization").FirstOrDefault().Value.ToString().Trim();
+                var token = requestAuth.Substring(requestAuth.IndexOf(" ") + 1);
+                userService.likeAnimal(animalId,token);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw new Exception("", ex);
+            }
+        }
+
+        [HttpGet("dislikeAnimal")]
+        public ActionResult dislikeAnimal(int animalId)
+        {
+            try
+            {
+                var requestAuth = Request.Headers.Where(x => x.Key == "Authorization").FirstOrDefault().Value.ToString().Trim();
+                var token = requestAuth.Substring(requestAuth.IndexOf(" ") + 1);
+                userService.dislikeAnimal(animalId, token);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw new Exception("", ex);
+            }
+        }
+        [HttpGet("getLikedAnimals")]
+        public List<AnimalViewModel> getLikedAnimals()
+        {
+            try
+            {
+                var requestAuth = Request.Headers.Where(x => x.Key == "Authorization").FirstOrDefault().Value.ToString().Trim();
+                var token = requestAuth.Substring(requestAuth.IndexOf(" ") + 1);
+                return userService.getLikedAnimals(token);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw new Exception("", ex);
             }
         }
     }
