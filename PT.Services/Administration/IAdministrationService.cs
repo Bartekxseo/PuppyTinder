@@ -10,5 +10,7 @@ namespace PT.Services.Administration
         string getToken(string username, string password);
 
         UserViewModel getUser(string token);
+
+        void addOrUpdateUser(UserViewModel user);
     }
 }

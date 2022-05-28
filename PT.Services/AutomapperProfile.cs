@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using PT.Domain.Entities;
 using PT.Services.Administration.Model;
 using PT.Services.Enums.Model;
+using PT.Services.User.Model;
 using System;
 using System.Linq;
 using System.Text;
@@ -39,8 +41,12 @@ namespace PT.Services
                 .ForMember(d => d.Kind, s => s.MapFrom(x => x.SpecificAnimalKind))
                 .ForMember(d => d.AnimalKindId, s => s.MapFrom(x => x.AnimalKind.Id));
 
-            CreateMap<User, UserViewModel>()
-                .ForMember(d=>d.Password,s=>s.MapFrom(x=> Encoding.UTF8.GetString(Convert.FromBase64String(x.PasswordHash))));
+            CreateMap<Domain.Entities.User, UserViewModel>()
+                .ForMember(d => d.Password, s => s.MapFrom(x => Encoding.UTF8.GetString(Convert.FromBase64String(x.PasswordHash))));
+            CreateMap<UserViewModel, Domain.Entities.User>()
+                .ForMember(d => d.PasswordHash, s => s.MapFrom(x => Convert.ToBase64String(Encoding.UTF8.GetBytes(x.Password))));
+
+            CreateMap<Animal, AnimalViewModel>();
         }
     }
 }

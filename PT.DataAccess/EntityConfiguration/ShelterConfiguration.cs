@@ -13,6 +13,7 @@ namespace PT.DataAccess.EntityConfiguration
             HasKey(x => x.Id);
             Property(x => x.Location);
             HasMany(x => x.Animals);
+            Property(x => x.Description).HasMaxLength(500);
         }
     }
 }

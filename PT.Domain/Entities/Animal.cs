@@ -30,7 +30,7 @@ namespace PT.Domain.Entities
         public bool Castrated { get; set; }
         public bool LikesKids { get; set; }
         public bool LikesAnimals { get; set; }
-        public bool Male { get; set; }
+        public bool IsMale { get; set; }
 
         public bool CustomBoolean1 { get; set; }
         public int CustomInteger1 { get; set; }

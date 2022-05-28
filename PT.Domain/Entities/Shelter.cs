@@ -9,5 +9,7 @@ namespace PT.Domain.Entities
     {
         public string Location { get; set; }
         public virtual ICollection<Animal> Animals { get; set; }
+
+        public string Description { get; set; }
     }
 }

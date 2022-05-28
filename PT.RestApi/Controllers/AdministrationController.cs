@@ -51,5 +51,19 @@ namespace PT.RestApi.Controllers
                 throw new Exception("",ex);
             }
         }
+
+        [HttpPost("addOrUpdateUser")]
+        public void addOrUpdateUser(UserViewModel user)
+        {
+            try
+            {
+                administrationService.addOrUpdateUser(user);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                throw new Exception("",ex);
+            }
+        }
     }
 }

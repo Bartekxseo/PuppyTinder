@@ -26,6 +26,7 @@ using AutoMapper;
 using Microsoft.Extensions.FileProviders;
 using PT.Services.Enums;
 using PT.Services.Administration;
+using PT.Domain.Services;
 
 namespace PT.RestApi
 {
@@ -77,8 +78,11 @@ namespace PT.RestApi
             {
                 return x.GetService<PTDbContext>();
             });
+
             services.AddScoped<IEnumService, EnumService>();
             services.AddScoped<IAdministrationService, AdministrationService>();
+            services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+
             services.AddMemoryCache();
 
             services.AddCors(builder => builder.AddPolicy("CorsPolicy",

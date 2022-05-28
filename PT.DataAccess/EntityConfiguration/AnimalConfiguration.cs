@@ -24,7 +24,7 @@ namespace PT.DataAccess.EntityConfiguration
             Property(x => x.Castrated).IsRequired();
             Property(x => x.LikesAnimals).IsRequired();
             Property(x => x.LikesKids).IsRequired();
-            Property(x => x.Male).IsRequired();
+            Property(x => x.IsMale).IsRequired();
             Property(x => x.CustomBoolean1).IsOptional();
             Property(x => x.CustomCharacter1).IsOptional();
             Property(x => x.CustomInteger1).IsOptional();
