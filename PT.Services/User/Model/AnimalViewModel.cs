@@ -7,7 +7,7 @@ namespace PT.Services.User.Model
 {
     public class AnimalViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string Name { get; set; }
 

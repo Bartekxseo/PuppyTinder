@@ -17,8 +17,8 @@ namespace PT.Services.User
     {
         private readonly PTDbContext ptDbContext;
         readonly IMapper mapper;
-        private readonly AdministrationService administrationService;
-        public UserService(PTDbContext ptDbContext, IMapper mapper, AdministrationService administrationService)
+        private readonly IAdministrationService administrationService;
+        public UserService(PTDbContext ptDbContext, IMapper mapper, IAdministrationService administrationService)
         {
             this.ptDbContext = ptDbContext;
             this.mapper = mapper;
@@ -27,7 +27,7 @@ namespace PT.Services.User
 
         public ShelterViewModel getShelter(int shelterId)
         {
-            var shelter = ptDbContext.Set<Shelter>().Where(x => x.Id == shelterId).ProjectTo<ShelterViewModel>(mapper.ConfigurationProvider).FirstOrDefault();
+            var shelter = ptDbContext.Set<Domain.Entities.Shelter>().Where(x => x.Id == shelterId).ProjectTo<ShelterViewModel>(mapper.ConfigurationProvider).FirstOrDefault();
             return shelter;
         }
 
@@ -78,6 +78,15 @@ namespace PT.Services.User
                 .Where(x => x.PreferenceId == user.PreferencesId && 
                 (x.RelationType == Domain.Entities.Enums.RelationTypeEnum.Like || x.RelationType == Domain.Entities.Enums.RelationTypeEnum.Accepted))
                 .Select(x => x.Animal).ProjectTo<AnimalViewModel>(mapper.ConfigurationProvider).ToList();
+        }
+
+        public PreferenceViewModel addOrUpdatePreferences(PreferenceViewModel preferenceViewModel)
+        {
+            var preference = preferenceViewModel.Id.HasValue && preferenceViewModel.Id.Value != 0 ? ptDbContext.Set<Preference>().SingleOrDefault(x => x.Id == preferenceViewModel.Id) : new Preference();
+            mapper.Map(preferenceViewModel, preference);
+            ptDbContext.Set<Preference>().AddOrUpdate(preference);
+            ptDbContext.SaveChanges();
+            return mapper.Map<PreferenceViewModel>(preference);
         }
     }
 }

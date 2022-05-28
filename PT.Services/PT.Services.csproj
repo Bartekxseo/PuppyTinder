@@ -15,4 +15,8 @@
     <ProjectReference Include="..\PT.DataAccess\PT.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Shelter\Model\" />
+  </ItemGroup>
+
 </Project>

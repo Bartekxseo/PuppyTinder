@@ -28,6 +28,7 @@ using PT.Services.Enums;
 using PT.Services.Administration;
 using PT.Domain.Services;
 using PT.Services.User;
+using PT.Services.Shelter;
 
 namespace PT.RestApi
 {
@@ -84,6 +85,7 @@ namespace PT.RestApi
             services.AddScoped<IAdministrationService, AdministrationService>();
             services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IShelterService, ShelterService>();
 
             services.AddMemoryCache();
 

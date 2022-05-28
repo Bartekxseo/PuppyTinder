@@ -15,5 +15,6 @@ namespace PT.Services.User
         void likeAnimal(int animalId, string token);
         void dislikeAnimal(int animalId, string token);
         List<AnimalViewModel> getLikedAnimals(string token);
+        PreferenceViewModel addOrUpdatePreferences(PreferenceViewModel preferenceViewModel);
     }
 }

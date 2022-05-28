@@ -6,7 +6,7 @@ namespace PT.Services.User.Model
 {
     public class ShelterViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string Location { get; set; }
 
