@@ -32,6 +32,7 @@ using PT.Services.Shelter;
 using PT.RestApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using PT.Services.FileStorage;
 
 namespace PT.RestApi
 {
@@ -89,7 +90,8 @@ namespace PT.RestApi
             services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IShelterService, ShelterService>();
-
+            services.AddScoped<IFileStorageConfiguration, FileStorageConfiguration>();
+            services.AddScoped<IFileStorageService, FileService>();
             services.AddMemoryCache();
 
             var bindJwtSettings = new JwtSettings();

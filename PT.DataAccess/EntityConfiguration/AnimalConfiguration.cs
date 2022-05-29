@@ -18,6 +18,7 @@ namespace PT.DataAccess.EntityConfiguration
             HasRequired(x => x.PuppySize).WithMany().HasForeignKey(x => x.PuppySizeId);
             HasRequired(x => x.Shelter).WithMany().HasForeignKey(x => x.ShelterId);
             HasMany(x => x.Characters).WithMany(x => x.Animals);
+            HasMany(x => x.Photos).WithRequired(x=>x.Animal).HasForeignKey(x=>x.AnimalId);
             Property(x => x.Age).IsRequired();
             Property(x => x.MinYard).IsOptional();
             Property(x => x.MinLivingSpace).IsOptional();

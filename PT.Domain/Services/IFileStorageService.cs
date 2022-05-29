@@ -12,13 +12,5 @@ namespace PT.Domain.FileStorage
 
         string GetFullFilePath(string relativeFilePath);
 
-        byte[] GetFileContent(string relativeFilePath);
-        byte[] GetFileContentAbsolutePath(string absoluteFilePath);
-        void SaveFile(string content, string destinationFilePath);
-
-        string GetFileJsonContent(string destinationFilePath);
-
-
-        void AddOrUpdate<T>(T model);
     }
 }

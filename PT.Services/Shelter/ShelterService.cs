@@ -2,7 +2,9 @@
 using AutoMapper.QueryableExtensions;
 using PT.DataAccess;
 using PT.Domain.Entities;
+using PT.Domain.FileStorage;
 using PT.Services.Administration;
+using PT.Services.Shelter.Model;
 using PT.Services.User.Model;
 using System;
 using System.Collections.Generic;
@@ -18,10 +20,13 @@ namespace PT.Services.Shelter
         private readonly PTDbContext ptDbContext;
         private readonly IAdministrationService administrationService;
         private readonly IMapper mapper;
-        public ShelterService(PTDbContext ptDbContext, IAdministrationService administrationService, IMapper mapper)
+        private readonly IFileStorageService fileStorageService;
+        public ShelterService(PTDbContext ptDbContext, IAdministrationService administrationService, IMapper mapper, IFileStorageService fileStorageService)
         {
             this.ptDbContext = ptDbContext;
             this.administrationService = administrationService;
+            this.mapper = mapper;
+            this.fileStorageService = fileStorageService;
         }
 
         public List<AnimalViewModel> getOwnAnimals(string token)
@@ -45,14 +50,30 @@ namespace PT.Services.Shelter
             ptDbContext.SaveChanges();
         }
 
-        public void uploadPhoto(FileStream photo)
+        public void uploadPhoto(Stream photo, ImageViewModel image)
         {
-            throw new NotImplementedException();
+            var safeFileName = fileStorageService.GetSafeFileName(image.FileName);
+            var storageFilePath = Path.Combine(image.PuppyName, safeFileName);
+            fileStorageService.SaveFile(photo, storageFilePath);
+            
+            var dbPhoto = new Photo
+            {
+                FileName = safeFileName,
+                Path = storageFilePath,
+                AnimalId = image.AnimalId
+
+            };
+            ptDbContext.Set<Photo>().Add(dbPhoto);
+            ptDbContext.Set<Animal>().SingleOrDefault(x => x.Id == image.AnimalId).Photos.Add(dbPhoto);
+            ptDbContext.SaveChanges();
+            
         }
 
         public void deletePhoto(int photoId)
         {
-            throw new NotImplementedException();
+            var photo = ptDbContext.Set<Photo>().SingleOrDefault(x => x.Id == photoId);
+            ptDbContext.Set<Animal>().SingleOrDefault(x => x.Id == photo.AnimalId).Photos.Remove(photo);
+            ptDbContext.Set<Photo>().Remove(photo);
         }
 
         public ShelterViewModel updateShelter(ShelterViewModel shelterViewModel)

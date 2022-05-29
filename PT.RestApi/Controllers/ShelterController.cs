@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using PT.Services.Shelter;
+using PT.Services.Shelter.Model;
 using PT.Services.User.Model;
 using System;
 using System.Collections.Generic;
@@ -73,11 +74,12 @@ namespace PT.RestApi.Controllers
             }
         }
         [HttpPost("uploadPhoto")]
-        public ActionResult uploadPhoto(FileStream photo)
+        public ActionResult uploadPhoto(ImageViewModel photo)
         {
             try
             {
-                shelterService.uploadPhoto(photo);
+                Stream file = new MemoryStream(photo.Array);
+                shelterService.uploadPhoto(file,photo);
                 return Ok();
 
             }

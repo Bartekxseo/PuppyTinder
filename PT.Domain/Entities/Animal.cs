@@ -21,6 +21,8 @@ namespace PT.Domain.Entities
 
         public virtual ICollection<Character> Characters { get; set; }
 
+        public virtual ICollection<Photo> Photos { get; set; }
+
         public int ShelterId { get; set; }
         public virtual Shelter Shelter { get; set; }
 
