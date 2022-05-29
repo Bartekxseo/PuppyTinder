@@ -29,6 +29,9 @@ using PT.Services.Administration;
 using PT.Domain.Services;
 using PT.Services.User;
 using PT.Services.Shelter;
+using PT.RestApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace PT.RestApi
 {
@@ -89,6 +92,30 @@ namespace PT.RestApi
 
             services.AddMemoryCache();
 
+            var bindJwtSettings = new JwtSettings();
+            Configuration.Bind("JsonWebTokenKeys", bindJwtSettings);
+            services.AddSingleton(bindJwtSettings);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = bindJwtSettings.ValidateIssuerSigningKey,
+                    IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(bindJwtSettings.IssuerSigningKey)),
+                    ValidIssuer = bindJwtSettings.ValidIssuer,
+                    ValidateAudience = bindJwtSettings.ValidateAudience,
+                    ValidAudience = bindJwtSettings.ValidAudience,
+                    RequireExpirationTime = bindJwtSettings.RequireExpirationTime,
+                    ValidateLifetime = bindJwtSettings.RequireExpirationTime,
+                    ClockSkew = TimeSpan.FromDays(1),
+                };
+            });
+
             services.AddCors(builder => builder.AddPolicy("CorsPolicy",
                 builder => builder.AllowAnyOrigin()
                 .AllowAnyMethod()
@@ -106,6 +133,26 @@ namespace PT.RestApi
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 swaggerAction.IncludeXmlComments(xmlPath);
+                swaggerAction.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme."
+                });
+                swaggerAction.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement {
+                {
+                    new Microsoft.OpenApi.Models.OpenApiSecurityScheme {
+                        Reference = new Microsoft.OpenApi.Models.OpenApiReference {
+                            Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }   
+                    },
+                    new string[] {}
+                    }
+                });
             });
 
             services.AddOData();
